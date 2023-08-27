@@ -11,6 +11,6 @@ export const SidebarData = [
   {
     title: "Recent",
     icon: <AccessTimeIcon />,
-    link: "/recent",
+    link: "/recent-images",
   },
 ];

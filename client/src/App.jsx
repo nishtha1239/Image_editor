@@ -15,7 +15,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/edit" element={<Edit />} />
-            <Route path="/recent" element={<RecentImages />} />
+            <Route path="/recent-images" element={<RecentImages />} />
           </Routes>
         </div>
       </div>
