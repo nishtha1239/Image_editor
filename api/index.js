@@ -62,17 +62,15 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 
   try {
     const imageFile = await fs.readFile(imagePath);
-    fs.readFile(imagePath, (err, data) => {
-      if (err) {
-        console.error("Error reading image:", err);
-      } else {
-        console.log("Image buffer:", data);
-      }
-    });
-    const response = await axios.post(url, imageFile, { headers });
-    const tagsResult = response.data.tagsResult.values;
-    const filteredTags = tagsResult.filter((tag) => tag.confidence >= 0.9);
-    const extractedTags = filteredTags.map((tag) => tag.name);
+    let extractedTags;
+    try {
+      const response = await axios.post(url, imageFile, { headers });
+      const tagsResult = response.data.tagsResult.values;
+      const filteredTags = tagsResult.filter((tag) => tag.confidence >= 0.9);
+      extractedTags = filteredTags.map((tag) => tag.name);
+    } catch {
+      extractedTags = [];
+    }
     const result = await Image.create({
       image: req.file.filename,
       tags: extractedTags,
