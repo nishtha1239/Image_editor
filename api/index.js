@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 const Image = require("./models/Image");
 const axios = require("axios");
 const fs = require("fs").promises;
+const fs1 = require("fs");
 
 dotenv.config();
 
@@ -84,7 +85,12 @@ app.delete("/images/:id", async (req, res) => {
     if (!imageToDelete) {
       return res.status(404).json({ message: "Image not found" });
     }
-
+    fs1.unlink("public/images/" + imageToDelete.image, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
     await imageToDelete.deleteOne();
     res.status(200).json({ message: "Image deleted successfully" });
   } catch (error) {

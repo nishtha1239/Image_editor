@@ -125,19 +125,26 @@ export default function Card(props) {
           </MenuItem>
         ))}
       </Menu>
-      <div className="w-full  mb-2 overflow-hidden rounded-md border-2 border-gray-200">
+      <div className="w-full mb-2 overflow-hidden rounded-md">
         <img
           src={props.src}
           alt="card-1"
-          className="w-full h-full object-cover cursor-pointer border-1 border-black"
+          className="w-full h-[200px] object-cover cursor-pointer border-2 border-gray-200"
           onClick={props.onClick}
         />
-        <div className="text-blue"> hi</div>
-        {props.tags &&
-          props.tags.map((tag) => {
-            console.log(tag);
-            return <div className="bg-blue-200">{tag}</div>;
-          })}
+        <div className="flex mt-2 gap-2 flex-wrap">
+          {props.tags &&
+            props.tags.map((tag, index) => {
+              return (
+                <div
+                  key={index + tag}
+                  className="bg-gray-200 text-[1rem] rounded-full px-2 py-1 text-center"
+                >
+                  {tag}
+                </div>
+              );
+            })}
+        </div>
       </div>
     </div>
   );
