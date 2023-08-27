@@ -10,7 +10,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/images")
+      .get("/images")
       .then((response) => {
         setImages(response.data);
       })
@@ -36,13 +36,9 @@ export default function Dashboard() {
             <Card
               key={index}
               id={image._id}
-              src={`http://localhost:4000/public/images/${image.image}`}
+              src={`/public/images/${image.image}`}
               tags={image.tags}
-              onClick={() =>
-                handleCardClick(
-                  `http://localhost:4000/public/images/${image.image}`
-                )
-              }
+              onClick={() => handleCardClick(`/public/images/${image.image}`)}
             />
           ))}
         </div>

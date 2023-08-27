@@ -20,7 +20,7 @@ function ImageUpload() {
       const formData = new FormData();
       formData.append("file", selectedFile);
       axios
-        .post("http://localhost:4000/upload", formData)
+        .post("/upload", formData)
         .then((response) => {
           console.log(response.data);
           navigate(0);

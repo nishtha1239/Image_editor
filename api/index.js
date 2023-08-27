@@ -32,6 +32,8 @@ app.use(
   express.static(path.join(__dirname, "public/images"))
 );
 
+app.use(express.static(path.join(__dirname, "/dist")));
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/images");
@@ -60,7 +62,13 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 
   try {
     const imageFile = await fs.readFile(imagePath);
-
+    fs.readFile(imagePath, (err, data) => {
+      if (err) {
+        console.error("Error reading image:", err);
+      } else {
+        console.log("Image buffer:", data);
+      }
+    });
     const response = await axios.post(url, imageFile, { headers });
     const tagsResult = response.data.tagsResult.values;
     const filteredTags = tagsResult.filter((tag) => tag.confidence >= 0.9);
@@ -122,8 +130,8 @@ app.get("/recent", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.send("okay");
-});
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "/dist/index.html"))
+);
 
-app.listen(4000);
+app.listen(8080, console.log("Server running on port 8080"));

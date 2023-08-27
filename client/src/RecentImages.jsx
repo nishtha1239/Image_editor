@@ -7,7 +7,7 @@ const RecentImages = () => {
   useEffect(() => {
     const fetchRecentImages = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/recent");
+        const response = await axios.get("/recent");
         setRecentImages(response.data);
       } catch (error) {
         console.error("Error fetching recent images:", error);
@@ -23,7 +23,7 @@ const RecentImages = () => {
         {recentImages.map((image) => (
           <div key={image.id} className="bg-gray-100 p-4 rounded-lg shadow-md">
             <img
-              src={`http://localhost:4000/public/images/${image.image}`}
+              src={`/images/${image.image}`}
               alt={`Image ${image.id}`}
               className="w-full h-40 object-cover rounded-md mb-2"
             />

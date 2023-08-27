@@ -31,7 +31,7 @@ export default function Card(props) {
 
   const handleDelete = () => {
     axios
-      .delete(`http://localhost:4000/images/${props.id}`)
+      .delete(`/images/${props.id}`)
       .then((response) => {
         console.log("Image deleted successfully");
         navigate(0);

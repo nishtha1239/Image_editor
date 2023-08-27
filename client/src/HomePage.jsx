@@ -7,7 +7,7 @@ const HomePage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/images")
+      .get("/images")
       .then((response) => {
         setImages(response.data);
       })
