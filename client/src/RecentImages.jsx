@@ -23,7 +23,7 @@ const RecentImages = () => {
         {recentImages.map((image) => (
           <div key={image.id} className="bg-gray-100 p-4 rounded-lg shadow-md">
             <img
-              src={`/images/${image.image}`}
+              src={`/public/images/${image.image}`}
               alt={`Image ${image.id}`}
               className="w-full h-40 object-cover rounded-md mb-2"
             />
