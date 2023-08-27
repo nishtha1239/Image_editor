@@ -25,7 +25,7 @@ export default function Card(props) {
     setAnchorEl(null);
   };
   const handleEdit = () => {
-    setSelectedImage(props.src); // Set the selected image using the context
+    setSelectedImage(props.src);
     handleClose();
   };
 
@@ -95,7 +95,30 @@ export default function Card(props) {
           horizontal: "right",
         }}
       >
-        {options.map((option) => (
+        {options.map((option) => {
+          if (option === "Edit") {
+            return (
+              <Link to="/edit">
+                <MenuItem
+                  key={option}
+                  selected={option === "Pyxis"}
+                  onClick={(event) => handleMenuItemClick(event, option)}
+                  onMouseDown={
+                    option === "Download"
+                      ? handleDownload
+                      : option === "Delete"
+                      ? handleDelete
+                      : option === "Edit"
+                      ? handleEdit
+                      : null
+                  }
+                  name={option}
+                >
+                  {option}
+                </MenuItem>
+              </Link>
+            );
+          }
           <MenuItem
             key={option}
             selected={option === "Pyxis"}
@@ -122,8 +145,8 @@ export default function Card(props) {
             }
           >
             {option}
-          </MenuItem>
-        ))}
+          </MenuItem>;
+        })}
       </Menu>
       <div className="w-full mb-2 overflow-hidden rounded-md">
         <img

@@ -68,7 +68,8 @@ app.post("/upload", upload.single("file"), async (req, res) => {
       const tagsResult = response.data.tagsResult.values;
       const filteredTags = tagsResult.filter((tag) => tag.confidence >= 0.9);
       extractedTags = filteredTags.map((tag) => tag.name);
-    } catch {
+    } catch (err) {
+      console.log(err);
       extractedTags = [];
     }
     const result = await Image.create({
