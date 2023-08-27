@@ -3,7 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useImage } from "./Context";
 import { saveAs } from "file-saver";
 import axios from "axios";
@@ -24,12 +24,15 @@ export default function Card(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleEdit = () => {
+  const handleEdit = (e) => {
+    e.preventDefault();
     setSelectedImage(props.src);
     handleClose();
+    navigate("/edit");
   };
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
+    e.preventDefault();
     axios
       .delete(`/images/${props.id}`)
       .then((response) => {
@@ -42,18 +45,10 @@ export default function Card(props) {
     handleClose();
   };
 
-  const handleDownload = () => {
+  const handleDownload = (e) => {
+    e.preventDefault();
     saveAs(props.src, "downloaded-image.jpg");
     handleClose();
-  };
-  const handleMenuItemClick = (event, option) => {
-    handleClose();
-
-    if (option === "Edit") {
-      setSelectedImage(props.src); // Set the selected image using the context
-    } else {
-      event.preventDefault(); // Prevent navigation for "Download" and "Delete" options
-    }
   };
 
   return (
@@ -95,46 +90,10 @@ export default function Card(props) {
           horizontal: "right",
         }}
       >
-        {options.map((option) => {
-          if (option === "Edit") {
-            return (
-              <Link to="/edit">
-                <MenuItem
-                  key={option}
-                  selected={option === "Pyxis"}
-                  onClick={(event) => handleMenuItemClick(event, option)}
-                  onMouseDown={
-                    option === "Download"
-                      ? handleDownload
-                      : option === "Delete"
-                      ? handleDelete
-                      : option === "Edit"
-                      ? handleEdit
-                      : null
-                  }
-                  name={option}
-                >
-                  {option}
-                </MenuItem>
-              </Link>
-            );
-          }
+        {options.map((option) => (
           <MenuItem
             key={option}
-            selected={option === "Pyxis"}
-            onClick={(event) => handleMenuItemClick(event, option)}
-            component={
-              option === "Edit" ? Link : undefined // Use Link component only for "Edit" option
-            }
-            to={
-              option === "Edit"
-                ? {
-                    pathname: "/edit",
-                    state: { image: props.src },
-                  }
-                : undefined // No "to" prop for other options
-            }
-            onMouseDown={
+            onClick={
               option === "Download"
                 ? handleDownload
                 : option === "Delete"
@@ -145,8 +104,8 @@ export default function Card(props) {
             }
           >
             {option}
-          </MenuItem>;
-        })}
+          </MenuItem>
+        ))}
       </Menu>
       <div className="w-full mb-2 overflow-hidden rounded-md">
         <img
