@@ -1,4 +1,4 @@
-# TechSurf2023
+# ImageEditor
 
 # Image Editor Application
 
